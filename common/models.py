@@ -12,9 +12,12 @@ class Medicine(models.Model):
 
 class Order(models.Model):
     name = models.CharField('订单名称', max_length=200)
-    create_data = models.DateTimeField('创建时间', auto_now_add=True)
+    create_time = models.DateTimeField('创建时间', auto_now_add=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     medicines = models.ManyToManyField(Medicine, through='OrderMedicine')
+
+    # 为了提高效率，这里存放 订单 medicines 冗余数据
+    medicinelist = models.CharField(max_length=2000, null=True, blank=True)
 
 class OrderMedicine(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT)

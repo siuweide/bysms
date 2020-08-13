@@ -24,7 +24,7 @@ def listorder(request):
 
     obj = Order.objects.annotate(customer_name=F('customer__name'),
                                  medicines_name=F('medicines__name')).\
-                        values('id', 'name', 'customer_name', 'medicines_name', 'create_data')
+                        values('id', 'name', 'customer_name', 'medicines_name', 'create_time')
     retlist = list(obj)
     newlist = []
     id2order = {}
