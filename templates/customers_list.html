@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+</head>
+    <body>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>姓名</th>
+                <th>电话号码</th>
+                <th>地址</th>
+            </tr>
+            <tr>
+                {% for customer in obj %}
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.phonenumber }}</td>
+                <td>{{ customer.address }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </body>
+</html>
