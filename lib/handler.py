@@ -22,6 +22,5 @@ def dispatcherBase(request, action2HandlerTable):
     if action in action2HandlerTable:
         handlerFunc = action2HandlerTable[action]
         return handlerFunc(request)
-
     else:
         return JsonResponse({'ret': 1, 'msg': 'action参数错误'})

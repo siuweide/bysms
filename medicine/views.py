@@ -1,9 +1,40 @@
-from django.http import JsonResponse
+from django.db.models import Q
+
 from common.models import Medicine
+from django.http import JsonResponse
+from django.core.paginator import Paginator, EmptyPage
 
 def listmedicine(request):
-    obj = list(Medicine.objects.values())
-    return JsonResponse({'ret': 0, 'retlist': obj})
+    try:
+        # 返回一个QuerySet对象，包含所有的记录
+        qs = Medicine.objects.values().order_by('-id')
+
+        keywords = request.params.get('keywords', None)
+        if keywords:
+            conditions = [Q(name__contains=one) for one in keywords.split(' ')]
+            query = Q()
+            for condition in conditions:
+                query &= condition
+            qs = qs.filter(query)
+
+        # 要获取第几页的数据
+        pagenum = request.params['pagenum']
+
+        # 每页显示多少条记录
+        pagesize = request.params['pagesize']
+
+        # 使用分页对象，设定每页多少条记录
+        paginator = Paginator(qs, pagesize)
+
+        # 从数据库中读取数据，指定读取其中第几页
+        page = paginator.page(pagenum)
+
+        retlist = list(page)
+
+        return JsonResponse({'ret': 0, 'retlist': retlist, 'total': paginator.count})
+
+    except EmptyPage:
+        return JsonResponse({'ret': 0, 'retlist': [], 'total': 0})
 
 def addmedicine(request):
     info = request.params['data']
