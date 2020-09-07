@@ -67,10 +67,11 @@ def modifymedicine(request):
 
 def deletemedicine(request):
     medicineId = request.params['id']
-
+    print('medicineId------------>', medicineId)
     if not Medicine.objects.filter(id=medicineId).exists():
         return JsonResponse({'ret': 1, 'msg': '药品不存在, 无法删除'})
 
     medicine = Medicine.objects.get(id=medicineId)
+    print('medicine-------->', medicine)
     medicine.delete()
     return JsonResponse({'ret': 0})

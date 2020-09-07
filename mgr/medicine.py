@@ -5,7 +5,7 @@ Action2Handler = {
     'list_medicine': listmedicine,
     'add_medicine': addmedicine,
     'modify_medicine': modifymedicine,
-    'delete_medicine': deletemedicine,
+    'del_medicine': deletemedicine,
 }
 
 def dispatcher(request):

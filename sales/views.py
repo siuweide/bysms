@@ -82,11 +82,13 @@ def modifycustomer(request):
 def deletecustomer(request):
 
     customerid = request.params['id']
+    print('customerid------------>', customerid)
 
     try:
+        print('进入到try------------>')
         customer = Customer.objects.get(id=customerid)
     except Customer.DoesNotExist:
-        return {'ret': 1, 'msg': f'id为`{customerid}`的客户不存在'}
+        return JsonResponse({'ret': 1, 'msg': f'id为`{customerid}`的客户不存在'})
 
     customer.delete()
-    return JsonResponse({'ret: 0'})
+    return JsonResponse({'ret': 0})
